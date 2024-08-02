@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showroom Dashboard | CarWallah</title>
+    <link rel="stylesheet" href="/css/showroom.css">
+    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        .add_car_main{
+            width: 94%;
+            /* border: 2px solid red; */
+            margin: 0 auto;
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .add_car_card{
+            width: 17rem;
+            height: 13rem;
+            /* border: 2px solid red; */
+            border-radius: 10px;
+            background-color: #fff;
+            /* padding: 0.8rem; */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.7rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .add_new{
+            background-color: #a3a3a3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .add_new:hover{
+            background-color: #000;
+        }
+        .add_new_circle{
+            height: 8rem;
+            width: 8rem;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .add_new_circle i{
+            font-size: 3rem;
+        }
+        .add_car_image_box{
+            width: 100%;
+            height: 100%;
+        }
+        .add_car_image_box img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .add_car_name_box{
+            display: flex;
+            flex-direction: column;
+            /* justify-content: center; */
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            background-color: #000;
+            /* opacity: 0.2; */
+            width: 100%;
+            padding: 0.4rem;
+            
+        }
+        .add_car_name_box h3, .add_car_name_box p{
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="seller-dash-container">
+
+        <!-- side navbar -->
+        <nav class="seller-navigation">
+            <!-- upper part -->
+            <div class="seller-nav-part1 seller-nav-part">
+                <a href="/" class="logo">
+                    <img src="/assets/images/CAR WALLAH LOGO.png" alt="" width="210px" height="40px">
+                  </a>
+                <div class="nav-menu-box">
+                    <h4 class="nav-menu-title">Menu</h4>
+                    <ul class="nav-menu-list">
+                        <a href=""><li class="nav-menu-items"><span class="material-symbols-outlined">space_dashboard</span>Dashboard</li></a>
+                        <a href=""><li class="nav-menu-items"><span class="material-symbols-outlined">directions_car</span>Cars</li></a>
+                        <a href=""><li class="nav-menu-items"><span class="material-symbols-outlined">store</span>Shop</li></a>
+                        <a href=""><li class="nav-menu-items"><span class="material-symbols-outlined">headset_mic</span>Support</li></a>
+                    </ul> 
+                </div>
+            </div>
+
+            <!-- lower part -->
+            <div class="seller-nav-part2 seller-nav-part">
+                <div class="nav-menu-box">
+                    <h4 class="nav-menu-title">Settings</h4>
+                    <ul class="nav-menu-list">
+                        <a href=""><li class="nav-menu-items"><span class="material-symbols-outlined">settings</span>Settings</li></a>
+                        <a href="" id="logout-link"><span class="material-symbols-outlined">logout</span>Logout</a>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- main content area -->
+        <div class="seller-dash-main-container">
+            <header class="seller-dash-header">
+                <h1 class="seller-header-title">Cars</h1>
+                <div class="seller-header-content-box">
+                    <!-- search-box -->
+                    <div class="search-box">
+                        <span class="material-symbols-outlined">search</span>
+                        <input type="text" placeholder="Search Here..." class="search-input">
+                    </div>
+                    <div class="seller-header-icons">
+                        <div class="icon-box"><i class="fa-solid fa-envelope"></i>
+                            <div class="indicator"></div>
+                        </div>
+                        <div class="icon-box"><i class="fa-solid fa-bell"></i>
+                            <div class="indicator"></div>
+                        </div>
+                        <div class="icon-box profile-box">
+                            <img src="/ASSETS/IMAGES/customer-4.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- add cars content area  -->
+            <main>
+                <div class="add_car_main">
+
+                    <!-- add new car -->
+                    <a class="add_car_card add_new" href="/addCarForm?showroom_id=<%= showroom_id %>&showroom_email=<%= encodeURIComponent(showroom_email) %>">
+                        <div class="add_new_circle">
+                            <i class="fa-solid fa-plus"></i>
+                            <!-- <p>Add New</p> -->
+                        </div>
+                        
+                    </a>
+                    <!-- car1 -->
+                    <% cars.forEach(function(car) {%> 
+                        <div class="add_car_card">
+                            <div class="add_car_image_box">
+                                <img src="/assets/images/<%=car.imagecode%>.jpg" alt="">
+                            </div>
+                            <div class="add_car_name_box">
+                                <h3><%=car.car_name%></h3>
+                                <p><%=car.year_man%></p>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

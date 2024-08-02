@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <style>
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            color: #ccc;
+        }
+
+        select option {
+            padding: 10px;
+        }
+
+        select option[selected] {
+            color: #fff;
+        }
+
+        select:focus {
+        }
+
+        select:disabled {
+            color: #999;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-form-container">
+        <div class="login-form-overlay">
+            <form action="/bookingForm" method="post">
+                <h3>Confirm Booking</h3>
+                <div class="input-field">
+                    <input type="email" placeholder="Email ID" name="email" class="box">
+                </div>
+                
+                <select name="showroom_id" class="box">
+                    <option value="">--Select car showroom--</option>
+                    <% showrooms.forEach(showroom => { %>
+                        <option value="<%= showroom.showroom_id %>"><%= showroom.showroom_name %></option>
+                    <% }) %>
+                </select>
+                <input type="hidden" name="car_id" value="<%= carID %>">
+                <input type="submit" value="Confirm Booking" class="btn">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

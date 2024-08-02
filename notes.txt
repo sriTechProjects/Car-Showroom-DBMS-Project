@@ -1,0 +1,393 @@
+// Initialize express app
+const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const path = require('path');
+const mysql = require('mysql');
+const encoder = bodyParser.urlencoded();
+const app = express();
+const ejs = require('ejs');
+
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'HTML')));
+app.set('views', path.join(__dirname, 'HTML'));
+app.use("/css", express.static("css"));
+app.use("/assets/images", express.static(path.join(__dirname, "assets", "images")));
+app.use("/js", express.static("js"));
+app.use('/chart.js-4.4.2', express.static("chart.js-4.4.2"));
+app.set('view engine', 'ejs');
+
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Session middleware
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true
+}));
+
+// MySQL connection
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'a1b2c3',
+    database: 'carShowroom'
+});
+
+// Connect to MySQL
+connection.connect(function (error) {
+    if (error) {
+        throw error;
+    } else {
+        console.log('MySQL Database is connected Successfully');
+    }
+});
+
+// Routes
+app.get('/', (req, res) => {
+    const query = `
+        SELECT c.car_id, c.car_name, c.imagecode, c.rating, c.price, c.colors,c.mileage, c.capacity, c.topspeed, c.year_man, 
+               SUM(cs.cars_sold) AS total_cars_sold
+        FROM cars c
+        JOIN carshow cs ON c.car_id = cs.car_id
+        GROUP BY c.car_id, c.car_name, c.imagecode, c.rating, c.price, c.colors, c.mileage, c.capacity, c.topspeed, c.year_man
+        ORDER BY total_cars_sold DESC
+        LIMIT 6
+    `;
+    connection.query(query, (error, results) => {
+        if (error) {
+            throw error;
+        } else {
+            // console.log(results);
+            res.render('index', { cars: results });
+        }
+    });
+});
+
+
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'HTML', 'login.html'));
+});
+
+// In your login route
+app.post('/login', (req, res) => {
+    var username = req.body.username;
+    var password = req.body.password;
+    connection.query("SELECT * FROM customers WHERE username = ? AND pass = ?", [username, password], (error, results) => {
+        if (error) {
+            res.send(error);
+        }
+        if (results.length > 0) {
+            req.session.loggedIn = true;
+            if (req.session.loggedIn) {
+                console.log("passed");
+            }
+            res.redirect('/');
+        } else {
+            console.log(username);
+            console.log(password);
+            res.redirect('/login');
+        }
+        res.end();
+    });
+});
+
+// In your checkLoginStatus route
+app.get('/checkLoginStatus', function (req, res) {
+    const loggedIn = req.session.loggedIn || false;
+    if (loggedIn) {
+        console.log("passed");
+    }
+    res.json({ loggedIn: loggedIn });
+});
+
+
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'HTML', 'register.html'));
+});
+
+
+// Route to handle user registration form submission and update profile form submission
+app.post('/register', encoder, (req, res) => {
+    var username = req.body.username;
+    var email = req.body.email;
+    var password = req.body.password;
+    var cpassword = req.body.cpassword;
+
+    if (password === cpassword) {
+        // Serve the update profile form
+        connection.query('INSERT INTO customers(email, pass, username, f_name, l_name, gender, dob, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [email, password, username, null, null, null, null, null], (error, results) => {
+            if (error) {
+                console.log(error);
+            }
+            res.redirect('/updateProfile');
+        })
+    } else {
+        // Handle password mismatch error
+        res.redirect('/register');
+    }
+});
+
+app.get('/updateProfile', (req, res) => {
+    res.sendFile(path.join(__dirname, 'HTML', 'createTheForm.html'));
+});
+
+app.post('/updateProfile', encoder, (req, res) => {
+    var email = req.body.email;
+    var fname = req.body.firstName;
+    var lname = req.body.lastName;
+    var gender = req.body.gender;
+    var dob = req.body.dob;
+    var address = req.body.address;
+
+    // Perform database update
+    const query = 'UPDATE customers SET f_name = ?, l_name = ?, gender = ?, dob = ?, address = ? WHERE email = ?';
+    connection.query(query, [fname, lname, gender, dob, address, email], (error, results) => {
+        if (error) {
+            console.error('Error updating data:', error);
+            res.status(500).send('Error updating data in the database');
+        } else {
+            res.redirect('/login');
+        }
+    });
+});
+
+app.get('/explore-cars', (req, res) => {
+    connection.query('SELECT * from cars', (error, results) => {
+        if (error) {
+            console.log(error);
+        }
+        // console.log(results);
+        res.render('explore_cars', { cars: results });
+    })
+});
+
+
+app.get('/showroom-login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'HTML', 'showroom_login.html'));
+});
+
+app.post('/showroom-login', encoder, (req, res) => {
+    var email = req.body.email;
+    var password = req.body.password;
+    connection.query('SELECT * from showroom where email=? and showroom_pass=?', [email, password], (error, results) => {
+        if (error) {
+            res.send(error);
+        }
+        console.log(results);
+        if (results.length > 0) {
+            req.session.email = email;
+            res.redirect(`/showroom-homepage?email=${encodeURIComponent(email)}`);
+        } else {
+            res.redirect('/showroom-login');
+        }
+        res.end();
+    });
+});
+
+app.get('/showroom-homepage', (req, res) => {
+    const userEmail = req.query.email;
+    // console.log(userEmail);
+    connection.query('select showroom_id from showroom where email = ?', [userEmail], (error, results1) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            const showroomId = results1[0].showroom_id;
+            // console.log(showroomId);
+            const query = `
+                SELECT
+                    COUNT(DISTINCT b.cust_id) AS total_customers,
+                    SUM(c.price) AS total_sales,
+                    SUM(cs.cars_sold) AS total_orders
+                FROM
+                    bookings b
+                JOIN
+                    cars c ON b.car_id = c.car_id
+                JOIN
+                    carshow cs ON b.showroom_id = cs.showroom_id
+                WHERE
+                    b.showroom_id = ?;
+            `;
+
+            connection.query(query, [showroomId], (error, results2) => {
+                if (error) {
+                    console.log(error);
+                }
+                console.log(results2);
+                const { total_sales, total_customers, total_orders } = results2[0];
+                const chartData = {
+                    totalSales: total_sales,  
+                    totalCustomers: total_customers,
+                    totalOrders: total_orders,
+                };
+
+                res.render('showroom-homepage', { chartData });
+            });
+        }
+    });
+
+});
+
+app.get('/chart-data', (req, res) => {
+    const email = req.query.email;
+    connection.query('select showroom_id from showroom where email = ?', [email], (error, results1) => {
+        if (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            const showroomId = results1[0].showroom_id;
+            const revorderQuery = `
+            SELECT
+                MONTH(b.booking_date) AS month,
+                SUM(c.price) AS revenue,
+                SUM(cs.cars_sold) AS orders,
+                COUNT(DISTINCT b.cust_id) AS total_customers
+            FROM
+                bookings b
+            JOIN
+                cars c ON b.car_id = c.car_id
+            JOIN
+                carshow cs ON b.showroom_id = cs.showroom_id
+            WHERE
+                b.showroom_id = ?
+            GROUP BY
+                MONTH(b.booking_date)
+            ORDER BY
+                MONTH(b.booking_date);`;
+
+            connection.query(revorderQuery, [showroomId], (revenueError, revenueResults) => {
+                if (revenueError) {
+                    console.error('Error fetching revenue and orders data from MySQL:', revenueError);
+                    res.status(500).json({ error: 'Internal Server Error' });
+                    return;
+                }
+
+                const chartData = {
+                    months: revenueResults.map(result => result.month),
+                    revenue: revenueResults.map(result => result.revenue),
+                    orders: revenueResults.map(result => result.orders)
+                };
+
+                console.log('Chart Data:', chartData); // Log to verify data
+
+                res.json(chartData);
+            });
+        }
+    });
+});
+
+
+
+
+app.use(express.json());
+app.get('/searched_car', (req, res) => {
+    const searchQuery = req.query.query;
+    const carSearch = '%' + searchQuery + '%';
+    console.log('Search query:', searchQuery);
+    connection.query('SELECT * FROM cars WHERE car_name LIKE ?', [carSearch], (error, results) => {
+        if (error) {
+            console.error('Error in SQL query:', error);
+            res.status(500).send('Error retrieving data');
+        } else {
+            console.log('Search results:', results);
+            res.render('searched_car', { cars: results });
+        }
+    });
+});
+
+app.post('/homepage-search', encoder, (req, res) => {
+    var { carModel, monthlyPay } = req.body;
+    var carModel = '%' + carModel + '%';
+    // console.log(carModel, monthlyPay);
+    if (carModel.length === 0 && monthlyPay.length === 0) {
+        res.redirect('/');
+    } else {
+        if (carModel.length !== 0 && monthlyPay.length === 0) {
+            connection.query('SELECT * FROM cars WHERE car_name LIKE ?', [carModel], (error, results) => {
+                if (error) {
+                    console.error('Error in SQL query:', error);
+                    res.status(500).send('Error retrieving data');
+                } else {
+                    res.render('searched_car', { cars: results });
+                }
+            })
+        } else if (monthlyPay.length !== 0 && carModel.length === 0) {
+            connection.query('SELECT * FROM cars WHERE price >= ?', [monthlyPay], (error, results) => {
+                if (error) {
+                    console.error('Error in SQL query:', error);
+                    res.status(500).send('Error retrieving data');
+                } else {
+                    res.render('searched_car', { cars: results });
+                }
+            })
+        }
+        else {
+            connection.query('SELECT * FROM cars WHERE price >= ? and car_name LIKE ?', [monthlyPay, carModel], (error, results) => {
+                if (error) {
+                    console.error('Error in SQL query:', error);
+                    res.status(500).send('Error retrieving data');
+                } else {
+                    res.render('searched_car', { cars: results });
+                }
+            });
+        }
+    }
+});
+
+app.get('/car_page', (req, res) => {
+    const car_id = req.query.car_id;
+    console.log(car_id)
+    if (!car_id) {
+        res.status(400).send('Car ID is required');
+        return;
+    }
+
+    const carQuery = `SELECT * FROM cars WHERE car_id = ?;`;
+    const showroomQuery = `
+    SELECT s.showroom_id, s.showroom_name, s.email, s.address 
+    FROM carshow as cs
+    JOIN showroom as s ON cs.showroom_id = s.showroom_id 
+    WHERE cs.car_id = ?
+    GROUP BY s.showroom_id, s.showroom_name, s.email, s.address;
+`;
+
+    connection.query(carQuery, [car_id], (carError, carResults) => {
+        if (carError) {
+            console.error('Error executing car query:', carError);
+            res.status(500).send('Error retrieving car data');
+            return;
+        }
+        // console.log(carResults);
+        if (carResults.length === 0) {
+            res.status(404).send('Car not found');
+            return;
+        }
+
+        connection.query(showroomQuery, [car_id], (showroomError, showroomResults) => {
+            if (showroomError) {
+                console.error('Error executing showroom query:', showroomError);
+                res.status(500).send('Error retrieving showroom data');
+                return;
+            }
+
+            const combinedResults = {
+                car: carResults[0],
+                showroom: showroomResults
+            };
+            
+            console.log(combinedResults);
+            const cars = carResults[0];
+            const showroom = showroomResults;
+            res.render('product', { car: cars, showroom: showroom});
+        });
+    });
+});
+
+
+
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

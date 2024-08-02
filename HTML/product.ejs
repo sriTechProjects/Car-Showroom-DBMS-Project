@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page | CarWallah</title>
+    <link rel="stylesheet" href="/css/style2.css">
+    <link rel="stylesheet" href="/css/product.css">
+    <link rel="shortcut icon" href="/ASSETS/IMAGES/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        .product-desc-content{
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            padding: 0 3rem;
+            row-gap: 1rem;
+        }
+        .prod-desc-color-box{
+            width: 100%;
+        }
+        .prod-desc-color-box .car-colors{
+            width: 20px;
+            height: 20px;
+            box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+        }
+        .product-desc-content .product-desc-item{
+            color: #333;
+            font-weight: 400;
+            display: flex;
+            flex-direction: column;
+            width: 6rem;
+            height: 6rem;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem 0;
+
+        }
+        .product-desc-content .product-desc-item span{
+            font-weight: 500;
+            color: #BC7FCD;
+            
+        }
+        .car-colors {
+            display: inline-block; /* Ensure the elements are inline-block */
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 5px; /* Optional: Adds space between the circles */
+        }
+
+        .prod-desc-color-box {
+            display: flex; /* Ensures the colors are aligned properly */
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- header start here -->
+    <header>
+        <nav>
+            <!-- left box -->
+            <a href="/" class="logo">
+                <img src="/assets/images/CAR WALLAH LOGO.png" alt="" width="210px" height="40px">
+              </a>
+
+            <!-- middle box -->
+            <div class="search-box">
+                <span class="material-symbols-outlined">search</span>
+                <input type="text" placeholder="Search Here..." class="search-input">
+            </div>
+
+            <!-- right box -->
+            <div class="nav-icons-box">
+                
+                <div class="nav-icon login-profile-box">
+                    <div class="profile-pic-hidden"><img src="/assets/images/CAR WALLAH LOGO.png" alt="profile pic"></div>
+                    <a href="/HTML/forms/login.html"><button class="login-btn"><span class="material-symbols-outlined">person</span>Login</button></a>
+                </div>
+            </div>
+        </nav>
+    </header> 
+    <!-- header ends here -->
+
+    <div class="productpage-main-container">
+        <div class="productpage-inner-container productpage-left-container">
+            <div class="productpage-image-container">
+                <div class="product-main-image-container">
+                    <img src="/assets/images/<%=car.imagecode%>.jpg" alt="">
+                </div>
+                <div class="product-sub-image-container">
+                    <div class="product-sub-image-box">
+                        <img src="/assets/images/<%=car.imagecode%>.jpg" alt="front view">
+                    </div>
+                    <div class="product-sub-image-box">
+                        <img src="/assets/images/<%=car.imagecode%>.jpg" alt="left view">
+                    </div>
+                    <div class="product-sub-image-box">
+                        <img src="/assets/images/<%=car.imagecode%>.jpg" alt="">
+                    </div>
+                    <div class="product-sub-image-box">
+                        <img src="/assets/images/<%=car.imagecode%>.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="productpage-inner-container productpage-right-container">
+            <div class="productpage-content-contianer">
+                <h1 class="product-name"><%=car.car_name%></h1>
+                 <!-- rating box -->
+                 <div class="product-rating-review-box">
+                    <div class="product-rating"><%=car.rating%><i class="fa-solid fa-star"></i></div>
+                    <div class="product-review-count"><span class="rating-span"><%=car.reviews%></span>ratings</div>
+                </div>
+                <p class="product-price">Price:
+                    <span class="material-symbols-outlined">currency_rupee</span>
+                    <span class="price-amount"><%=car.price%></span>
+                    <span class="tax-inc">(inclusive of all taxes)</span>
+                </p>
+                <p class="product-mrp">MRP:
+                    <span class="material-symbols-outlined">currency_rupee</span>
+                    <span class="price-mrp-amount" style="text-decoration: line-through;"><%=car.mrp%>></span>
+                </p>
+                
+                <div class="product-btn-box">
+                    <a href="/bookingForm?carID=<%=car.car_id%>"><button class="add-To-Basket-Btn">Book Now </i></button></a>
+                </div>
+
+                <div class="product-description-box">
+                    <h2 class="product-desc-title">Features</h2>
+                    <div class="product-desc-content">
+                        <div class="product-desc-item"><span>Mileage</span> <%=car.mileage%></div>
+                        <div class="product-desc-item"><span>Capacity</span> <%=car.capacity%> L</div>
+                        <div class="product-desc-item"><span>Top Speed</span> <%=car.topspeed%> kmph</div>
+                        <div class="product-desc-item">
+                            <span>Colors</span>
+                            <div class="prod-desc-color-box">
+                                <% if (car.colors) { %>
+                                    <% car.colors.split(',').forEach(function(color) { %>
+                                        <% const cssColor = color.trim().toLowerCase(); %>
+                                        <span class="car-colors" style="background-color: <%= cssColor %>;"></span>
+                                    <% }); %>
+                                <% } else { %>
+                                    <span>No colors available</span>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="product-desc-item"><span>Year</span><%=car.year_man%></div>
+
+                    </div> 
+                </div>
+
+
+                <!-- quantity container -->
+                <div class="product-quantity-box">
+                    <h2 class="product-quantity-title">Showrooms</h2>
+                    
+                    <div class="product-quantity-container">
+                        <% showroom.forEach(function(shoom) { %>
+                            <a href="" class="shop-card">
+                                <div class="shop-image-box">
+                                    <img src="/assets/images/showroom.JPG" alt="">
+                                    <div class="shop-rating-box">
+                                       4.5 <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="shop-detail-box">
+                                    <div class="showroom-title-box">
+                                        <h3 class="showroom-title"><%=shoom.showroom_name%></h3>
+                                        <div class="shop-status-box">
+                                            <p style="color: green;">Open</p>
+                                        </div>
+                                    </div>
+                                    <p class="showroom-address"><%=shoom.address%>
+                                    <div class="showroom-contact-box">
+                                        <button class="visit-btn">Visit Now</button>
+                                        <div class="contact-btns">
+                                            <div class="phone-box contact-icon-box"><i class="fa-solid fa-phone"></i></div>
+                                            <div class="email-box contact-icon-box"><i class="fa-solid fa-envelope"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <% }); %>
+                        <!-- shop1 -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+<!-- footer section starts here -->
+<footer class="footer-section">
+    <div class="footer-container">
+        <div class="footer-row">
+            <div class="footer-col">
+                <a href="/HTML/index.html"><img src="/assets/images/white-logo.png" alt="logo" class="white-logo"></a>
+            </div>
+            <!-- column 1 -->
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Services</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">affiliate Program</a></li>
+                </ul>
+            </div>
+
+            <!-- column 2 -->
+            <div class="footer-col">
+                <h4>Help</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Booking</a></li>
+                    <li><a href="#">Enquiry</a></li>
+                    <li><a href="#">Booking Status</a></li>
+                    <li><a href="#">Notifications</a></li>
+                </ul>
+            </div>
+
+            <!-- column 3 -->
+            <div class="footer-col">
+                <h4>Brands</h4>
+                <ul>
+                    <li><a href="#">Audi</a></li>
+                    <li><a href="#">BMW</a></li>
+                    <li><a href="#">Mercedes</a></li>
+                    <li><a href="#">Lamborgini</a></li>
+                    <li><a href="#">Jaguar</a></li>
+                    <li><a href="#">Nissan</a></li>
+                </ul>
+            </div>
+
+            <!-- column 4 -->
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-contact-row">
+            <div class="footer-contact-no footer-contact-row-ele"><i class="fa-solid fa-phone"></i> +91-7739226540</div>
+            <div class="footer-contact-email footer-contact-row-ele"><i class="fa-solid fa-envelope"></i>carWallah  @contact.in</div>
+            <div class="footer-copyright footer-contact-row-ele"><i class="fa-solid fa-copyright"></i>Copyright 2023 - 2024</div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

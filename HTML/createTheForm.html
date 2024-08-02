@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <div class="login-form-container">
+        <div class="login-form-overlay">
+            <form action="/updateProfile" method="post">
+                <h3>Fill Remaining</h3>
+                    
+
+                    <input type="text" placeholder="First Name" name="firstName" class="box">
+                    <input type="text" placeholder="Last Name" name="lastName" class="box">
+                
+                    <input type="email" placeholder="abc@gmail.com" name="email" class="box">
+                <div class="gender-box">
+                    
+                    <label for="gender">
+                        <input type="radio" name="gender" id="gender" value="male">Male
+                    </label>
+                    <label for="gender">
+                        <input type="radio" name="gender" id="gender" value="female">Female
+                    </label>
+                    <label for="gender">
+                        <input type="radio" name="gender" id="gender" value="others">Others
+                    </label>
+                </div>
+
+                <input type="date" name="dob" id="dob">
+                <textarea name="address" id="address" placeholder="Address"></textarea>
+
+                <input type="submit" value="Submit" class="btn">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP | CarWallah</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <div class="login-form-container">
+        <div class="login-form-overlay">
+            <form action="/otp" method="post">
+                <h3>Verify OTP</h3>
+                <p style="font-size: 1.2rem;">Enter the 6 digit otp received on your registered email</p>
+                <div class="input-field">
+                    <input type="password" placeholder="otp" name="otp" class="box">
+                    <div class="icon-box" id="password-toggle" class="password-toggle">
+                        <span class="material-symbols-outlined">password</span>
+                    </div>
+                </div>
+                
+                <input type="submit" value="Verify" class="btn">
+                <!-- <p>Don't have an account? <a href="register.html">Register</a></p> -->
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarWallah - Rent your favourite car</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- 
+    - favicon
+  -->
+  <!-- <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml"> -->
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Open+Sans&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+  <style>
+    .header-actions .login-btn{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0 1rem;
+    }
+    .header-actions .login-btn a{
+      height: 3rem;
+      width: 3rem;
+      border-radius: 50%;
+      background-color: hsl(284, 100%, 97%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .header-actions .login-btn a span{
+      color: #86469C;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <div class="overlay" data-overlay></div>
+
+      <a href="/" class="logo">
+        <img src="/assets/images/CAR WALLAH LOGO.png" alt="" width="210px" height="40px">
+      </a>
+
+      <nav class="navbar" data-navbar>
+        <ul class="navbar-list">
+            <li>
+                <a href="#home" class="navbar-link" data-nav-link>Home</a>
+            </li>
+            <li>
+                <a href="#" class="navbar-link" data-nav-link>About us</a>
+            </li>
+            <li>
+                <a href="/explore-cars" class="navbar-link" data-nav-link>Explore cars</a>
+            </li>
+            <li>
+                <a href="/booking" class="navbar-link" data-nav-link id="booking-link">Booking</a>
+            </li>
+            <li>
+                <a href="#blog" class="navbar-link" data-nav-link>Contact Us</a>
+            </li>
+        </ul>
+    </nav>
+    
+
+    <div class="header-actions">
+      <a href="/showroom-login"><span class="material-symbols-outlined">add_business</span></a>
+      <div class="hidden">
+        <a href="/login"><button class="btn" id="loginButton" style="width: 5rem;">Login</button></a>
+        <div class="avatar" id="avatar">  
+          <img src="/assets/images/profile-picture.png" alt="profile image">
+        </div>
+      </div>
+    </div>
+    </div>
+  </header>
+  <main>
+    <article>
+
+      <!-- Hero section  -->
+
+      <section class="section hero" id="home">
+        <div class="container">
+
+          <div class="hero-content">
+            <h2 class="h1 hero-title">Looking for your<span style="color: #86469C;">Dream Car?</span>Your wait is over</h2>
+
+            <p class="hero-text">
+              Explore Our Wide Range of Cars and Drive Home Your Dream Today
+            </p>
+          </div>
+
+          <div class="hero-banner"></div>
+
+          <form action="/homepage-search" method="post" class="hero-form">
+
+            <div class="input-wrapper">
+              <label for="input-1" class="input-label">Car, model, or brand</label>
+
+              <input type="text" name="carModel" id="input-1" class="input-field"
+                placeholder="What car are you looking?" value="">
+            </div>
+
+            <div class="input-wrapper">
+              <label for="input-2" class="input-label">Budget</label>
+
+              <input type="text" name="monthlyPay" id="input-2" class="input-field" placeholder="Add an amount in Rs." value="">
+            </div>
+<!-- 
+            <div class="input-wrapper">
+              <label for="input-3" class="input-label">Make Year</label>
+
+              <input type="text" name="year" id="input-3" class="input-field" placeholder="Add a minimal make year">
+            </div> -->
+
+            <button type="submit" class="btn">Search</button>
+          </form>
+        </div>
+      </section>
+      <!-- featured brands section -->
+      <section class="section blog car-brand">
+        <div class="container">
+
+          <h2 class="h2 section-title">Featured Brands</h2>
+
+          <ul class="has-scrollbar brand-scroll-box">
+
+            <!-- card-1 -->
+            <li>
+              <a href="/branded-cars?brand=audi">
+              <div class="car-brand-card">
+                <img src="/assets/images/brand-1.jpg" alt="audi">
+            </div>
+          </a>
+            </li>
+
+            <!-- card-2 -->
+            <li>
+              <a href="/branded-cars?brand=bmw">
+              <div class="car-brand-card">
+                <img src="/assets/images/brand-2.jpg" alt="audi">
+              </div>
+            </a>
+            </li>
+
+            <!-- card-3 -->
+            <li>
+              <a href="/branded-cars?brand=mercedes">
+              <div class="car-brand-card">
+               <img src="/assets/images/brand-3.jpg" alt="audi">
+              </div>
+            </a>
+            </li>
+
+            <!-- card-4 -->
+            <li>
+              <a href="/branded-cars?brand=jaguar">
+              <div class="car-brand-card">
+                <img src="/assets/images/brand-4.jpg" alt="audi">
+              </div>
+            </a>
+            </li>
+
+            <!-- card-5 -->
+            <li>
+              <a href="/branded-cars?brand=lamborghini">
+              <div class="car-brand-card">
+                <img src="/assets/images/brand-5.jpg" alt="audi">
+              </div>
+            </a>
+            </li>
+
+            <!-- card-6 -->
+            <li>
+              <a href="/branded-cars?brand=nissan">
+              <div class="car-brand-card">
+                <img src="/assets/images/brand-6.jpg" alt="audi">
+              </div>
+            </a>
+            </li>
+            
+
+          </ul>
+
+        </div>
+      </section>
+
+
+
+      <section class="section featured-car" id="featured-car">
+        <div class="container">
+
+            <ul class="featured-car-list">
+                <% cars.forEach(function(car) { %>
+                    <li>
+                        <div class="featured-car-card">
+                            <figure class="card-banner">
+                                <div class="car-rating-box">
+                                    <%= car.rating %> <ion-icon name="star" class="car-rating-icon"></ion-icon>
+                                </div>
+                                <img src="/assets/images/<%=car.imagecode%>.jpg" alt="<%= car.imagecode %> <%= car.year_man %>" loading="lazy" width="430" height="293" class="w-100">
+
+                                <div class="car-color-box">
+                                  <% if (car.colors) { %>
+                                    <% car.colors.split(',').forEach(function(color) { %>
+                                        <% const cssColor = color.trim().toLowerCase(); %>
+                                        <span class="car-colors" style="background-color: <%= cssColor %>;"></span>
+                                    <% }); %>
+                                <% } else { %>
+                                    <span>No colors available</span>
+
+                                <% } %>
+                                </div>
+                            </figure>
+
+                            <div class="card-content">
+
+                                <div class="card-title-wrapper">
+                                    <h3 class="h3 card-title">
+                                        <a href="#"><%= car.car_name %></a>
+                                    </h3>
+
+                                    <data class="year" value="<%= car.year_man %>"><%= car.year_man %></data>
+                                </div>
+
+                                <ul class="card-list">
+                                    <li class="card-list-item">
+                                        <ion-icon name="speedometer-outline"></ion-icon>
+                                        <span class="card-item-text"><%= car.topspeed %> kmph</span>
+                                    </li>
+                                    <li class="card-list-item">
+                                        <ion-icon name="flash-outline"></ion-icon>
+                                        <span class="card-item-text"><%= car.capacity %> cc</span>
+                                    </li>
+                                    <li class="card-list-item">
+                                        <i class="fa-solid fa-gas-pump"></i>
+                                        <span class="card-item-text"><%= car.mileage %> kmpl</span>
+                                    </li>
+                                    <li class="card-list-item">
+                                        <ion-icon name="cog-outline"></ion-icon>
+                                        <span class="card-item-text">Mannual</span>
+                                    </li>
+                                </ul>
+
+                                <div class="card-price-wrapper">
+                                    <p class="card-price">
+                                        Rs. <strong><%= car.price %></strong>
+                                    </p>
+                                    <button class="btn fav-btn" aria-label="Add to favourite list">
+                                        <ion-icon name="heart-outline"></ion-icon>
+                                    </button>
+                                    <button class="btn">Book now</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </li>
+
+                <% }); %>
+            </ul>
+
+        </div>
+    </section>
+    </article>
+  </main>
+<!-- footer section starts here -->
+<footer class="footer-section">
+  <div class="footer-container">
+      <div class="footer-row">
+          <div class="footer-col">
+              <a href="/HTML/index.html"><img src="/assets/images/white-logo.png" alt="logo" class="white-logo"></a>
+          </div>
+          <!-- column 1 -->
+          <div class="footer-col">
+              <h4>Company</h4>
+              <ul>
+                  <li><a href="#">About Us</a></li>
+                  <li><a href="#">Our Services</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+                  <li><a href="#">affiliate Program</a></li>
+              </ul>
+          </div>
+
+          <!-- column 2 -->
+          <div class="footer-col">
+              <h4>Help</h4>
+              <ul>
+                  <li><a href="#">FAQ</a></li>
+                  <li><a href="#">Booking</a></li>
+                  <li><a href="#">Enquiry</a></li>
+                  <li><a href="#">Booking Status</a></li>
+                  <li><a href="#">Notifications</a></li>
+              </ul>
+          </div>
+
+          <!-- column 3 -->
+          <div class="footer-col">
+              <h4>Brands</h4>
+              <ul>
+                  <li><a href="#">Audi</a></li>
+                  <li><a href="#">BMW</a></li>
+                  <li><a href="#">Mercedes</a></li>
+                  <li><a href="#">Lamborgini</a></li>
+                  <li><a href="#">Jaguar</a></li>
+                  <li><a href="#">Nissan</a></li>
+              </ul>
+          </div>
+
+          <!-- column 4 -->
+          <div class="footer-col">
+              <h4>Follow Us</h4>
+              <div class="social-links">
+                  <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                  <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                  <a href="#"><i class="fa-brands fa-instagram"></i></a>
+              </div>
+          </div>
+      </div>
+      <div class="footer-contact-row">
+          <div class="footer-contact-no footer-contact-row-ele"><i class="fa-solid fa-phone"></i> +91-7739226540</div>
+          <div class="footer-contact-email footer-contact-row-ele"><i class="fa-solid fa-envelope"></i>carWallah  @contact.in</div>
+          <div class="footer-copyright footer-contact-row-ele"><i class="fa-solid fa-copyright"></i>Copyright 2023 - 2024</div>
+      </div>
+  </div>
+</footer>
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="js/script.js"></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bookingLink = document.getElementById('booking-link');
+        const currentUrl = window.location.href;
+        const url = new URL(currentUrl);
+        const username = url.searchParams.get('username'); // Assuming username is passed as query parameter
+        
+        if (username) {
+            bookingLink.href = `/booking?username=${username}`;
+        }
+    });
+</script>
+
+</body>
+
+</html>

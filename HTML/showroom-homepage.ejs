@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showroom Dashboard | CarWallah</title>
+    <link rel="stylesheet" href="/css/showroom.css">
+    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <div class="seller-dash-container">
+
+        <!-- side navbar -->
+        <nav class="seller-navigation">
+            <!-- upper part -->
+            <div class="seller-nav-part1 seller-nav-part">
+                <a href="/" class="logo">
+                    <img src="/assets/images/CAR WALLAH LOGO.png" alt="" width="210px" height="40px">
+                  </a>
+                <% console.log("Email in template: " + chartData.email); %>
+                <div class="nav-menu-box">
+                    <h4 class="nav-menu-title">Menu</h4>
+                    <ul class="nav-menu-list">
+                        <a href=""><li class="nav-menu-items"><span class="material-symbols-outlined">space_dashboard</span>Dashboard</li></a>
+                        <a href="/addCar?email=<%=email%>">
+                            <li class="nav-menu-items"><span class="material-symbols-outlined">inventory_2</span>Cars List</li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- lower part -->
+            <div class="seller-nav-part2 seller-nav-part">
+                <div class="nav-menu-box">
+                    <h4 class="nav-menu-title">Settings</h4>
+                    <ul class="nav-menu-list">
+                        <a href=""><li class="nav-menu-items"><span class="material-symbols-outlined">settings</span>Settings</li></a>
+                        <a href="" id="logout-link"><span class="material-symbols-outlined">logout</span>Logout</a>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- main content area -->
+        <div class="seller-dash-main-container">
+            <header class="seller-dash-header">
+                <h1 class="seller-header-title">Dashboard</h1>
+                <div class="seller-header-content-box">
+                    <!-- search-box -->
+                    <div class="search-box">
+                        <span class="material-symbols-outlined">search</span>
+                        <input type="text" placeholder="Search Here..." class="search-input">
+                    </div>
+                    <div class="seller-header-icons">
+                        <div class="icon-box"><i class="fa-solid fa-envelope"></i>
+                            <div class="indicator"></div>
+                        </div>
+                        <div class="icon-box"><i class="fa-solid fa-bell"></i>
+                            <div class="indicator"></div>
+                        </div>
+                        <div class="icon-box profile-box">
+                            <img src="/ASSETS/IMAGES/customer-4.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="seller-dash-content-container">
+
+                <!-- card container  -->
+                <div class="seller-dash-card-container">
+                    <!-- card 1 -->
+                    <div class="seller-dash-card">
+                        <div class="seller-card-title-box">
+                            <h1 class="card-title">Total Sales</h1>
+                            <div class="card-icon-box">
+                                <span class="material-symbols-outlined">payments</span>
+                            </div>
+                        </div>
+                        <div class="seller-card-content-box">
+                            <span class="material-symbols-outlined">currency_rupee</span>
+                            <h1 class="card-title"><%= chartData.totalSales %></h1>                                
+                        </div>
+                    </div>
+
+                    <!-- card 2 -->
+                    <div class="seller-dash-card">
+                        <div class="seller-card-title-box">
+                            <h1 class="card-title">Total Customers</h1>
+                            <div class="card-icon-box">
+                                <span class="material-symbols-outlined">group</span>
+                            </div>
+                        </div>
+                        <div class="seller-card-content-box">
+                            <h1 class="card-title"><%= chartData.totalCustomers %></h1>                                
+                        </div>
+                    </div>
+
+                    <!-- card 3 -->
+                    <div class="seller-dash-card">
+                        <div class="seller-card-title-box">
+                            <h1 class="card-title">Total Orders</h1>
+                            <div class="card-icon-box">
+                                <span class="material-symbols-outlined">shopping_bag</span>
+                            </div>
+                        </div>
+                        <div class="seller-card-content-box">
+                            <h1 class="card-title"><%= chartData.totalOrders %></h1>                                
+                        </div>
+                    </div>
+                </div>
+
+                <!-- graph container -->
+                <div class="seller-dash-chart-container">
+
+                    <!-- line chart box -->
+                    <div class="seller-chart-box">
+                        <!-- chart header -->
+                        <div class="chart-box-header-box">
+                            <div class="chart-box-header-left">
+                                <h3>Monthly Sales</h3>
+                            </div>
+                        </div>
+
+                        <!-- chart box -->
+                        <div class="main-chart-box">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- bar chart box -->
+                    <div class="seller-chart-box">
+                        <!-- chart header -->
+                        <div class="chart-box-header-box">
+                            <div class="chart-box-header-left">
+                                <h3>Monthly Orders</h3>
+                            </div>
+                        </div>
+
+                        <!-- chart box -->
+                        <div class="main-chart-box">
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                    </div>
+                   
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <script src="chart.js-4.4.2/package/dist/chart.umd.js"></script>    
+    <script src="js/charts.js"></script>
+    // In your EJS script section
+<script>
+    function fetchChartData() {
+        // Extract email from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get('email');
+
+        if (!email) {
+            console.error('Email parameter is missing in the URL.');
+            return;
+        }
+
+        fetch(`/chart-data?email=${encodeURIComponent(email)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(chartData => {
+                console.log('Received Chart Data:', chartData); // Log to verify data received
+                renderChart1(chartData.months, chartData.revenue);
+                renderChart2(chartData.months, chartData.orders);
+            })
+            .catch(error => {
+                console.error('Error fetching chart data:', error);
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchChartData);
+</script>
+
+    
+</body>
+</html>
